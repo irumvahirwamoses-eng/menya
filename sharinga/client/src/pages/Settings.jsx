@@ -8,7 +8,6 @@ import {
   Volume2,
   Hand,
   Accessibility,
-  KeyRound,
   Save,
   RotateCcw,
   Zap,
@@ -21,7 +20,7 @@ import { useAuth } from "../context/AuthContext";
 import { useDisplay } from "../context/DisplayContext";
 import { useTTS } from "../hooks/useTTS";
 import { ACCESS_MODE_LIST } from "../lib/constants";
-import { getSignSpeakKey, setSignSpeakKey } from "../components/chat/AslAvatar";
+
 
 const Section = ({ icon, title, description, children }) => {
   const SectionIcon = icon;
@@ -72,8 +71,7 @@ export default function Settings() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
-  const [apiKey, setApiKey] = useState(getSignSpeakKey());
-  const [keySaved, setKeySaved] = useState(false);
+
 
   const saveMode = async (accessMode) => {
     setSaving(true);
@@ -89,11 +87,7 @@ export default function Settings() {
     }
   };
 
-  const saveKey = () => {
-    setSignSpeakKey(apiKey.trim());
-    setKeySaved(true);
-    setTimeout(() => setKeySaved(false), 2000);
-  };
+
 
   return (
     <AppShell>
@@ -276,32 +270,7 @@ export default function Settings() {
             )}
           </Section>
 
-          <Section
-            icon={KeyRound}
-            title="ASL avatar key"
-            description="Free Sign-Speak API key that powers the signing avatar (Deaf mode)."
-          >
-            <Field
-              label="Sign-Speak API key"
-              type="password"
-              autoComplete="off"
-              placeholder="Paste your public API key"
-              hint="Get a free key at client.sign-speak.com — stored only in this browser."
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-            />
-            <div className="mt-4 flex items-center gap-3">
-              <Button onClick={saveKey} disabled={saving}>
-                <Save className="h-4 w-4" aria-hidden="true" />
-                Save key
-              </Button>
-              {keySaved && (
-                <span className="text-sm font-semibold text-success" role="status">
-                  Saved
-                </span>
-              )}
-            </div>
-          </Section>
+
 
           <div className="flex items-center justify-between gap-4 rounded-2xl border border-line bg-surface p-5">
             <div>

@@ -49,7 +49,9 @@ const io = new Server(server, {
 });
 registerSocket(io);
 
-connectDB(process.env.MONGODB_URI)
+const MONGO_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/sharinga";
+
+connectDB(MONGO_URI)
   .then(() => {
     server.listen(PORT, () => {
       console.log(`[server] listening on port ${PORT}`);
