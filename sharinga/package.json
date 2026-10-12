@@ -1,0 +1,20 @@
+{
+  "name": "sharinga",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Inclusive real-time conversation app — bridges people with and without disabilities using an ASL avatar, voice, symbols, and accessible design.",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,magenta \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "start": "npm run start -w server",
+    "lint": "npm run lint -w client",
+    "render-build": "npm install && npm run build -w client && npm install -w server --omit=dev"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
