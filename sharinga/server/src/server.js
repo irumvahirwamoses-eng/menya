@@ -10,6 +10,7 @@ import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/users.routes.js";
 import conversationRoutes from "./routes/conversations.routes.js";
+import translateRoutes from "./routes/translate.routes.js";
 import { registerSocket } from "./socket/index.js";
 
 const PORT = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ app.get("/api/health", (_req, res) => res.json({ ok: true, service: "sharinga-ap
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/conversations", conversationRoutes);
+app.use("/api/translate", translateRoutes);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

@@ -1,14 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Hand, Loader2, AlertTriangle, Info } from "lucide-react";
 import { useDisplay } from "../../context/DisplayContext";
+import { api } from "../../lib/api";
 
 /**
- * Free, keyless ASL captions-first. Designed to be swapped with an open-source
- * avatar (e.g. slt-frontend/Performs) later without changing API.
+ * Free open-source text→ASL gloss via sign-language-translator service (Python).
+ * Falls back to captions if service unavailable.
  */
 export default function AslAvatar({ text }) {
   const [status, setStatus] = useState("idle");
+  const [gloss, setGloss] = useState(null);
   const { settings } = useDisplay();
+
+  useEffect(() => {
+    let cancel = false;
+    setGloss(null);
+    if (!text?.trim()) return;
+    setStatus("loading");
+    api("/translate", { method: "POST", body: { text } })
+      .then((r) => {
+        if (cancel) return;
+        setGloss(r.gloss || text);
+        setStatus("ready");
+      })
+      .catch(() => {
+        if (cancel) return;
+        setGloss(text);
+        setStatus("unavailable");
+      });
+    return () => {
+      cancel = true;
+    };
+  }, [text]);
 
   if (!text?.trim()) {
     return (
@@ -43,15 +66,20 @@ export default function AslAvatar({ text }) {
         <div className="flex flex-col items-center px-4 text-center">
           <Info className="h-6 w-6 text-muted" aria-hidden="true" />
           <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
-            Captions-first for reliability. Can be extended with free open-source sign
-            rendering later.
+            Free open-source text→ASL gloss (sign-language-translator).
           </p>
+          {gloss && (
+            <div className="mt-3 rounded-xl border border-line bg-surface px-4 py-2">
+              <p className="text-xs font-bold uppercase tracking-wide text-muted">ASL Gloss</p>
+              <p className="mt-1 text-base font-semibold text-ink">{gloss}</p>
+            </div>
+          )}
         </div>
         {status === "unavailable" && (
           <div className="absolute inset-0 grid place-items-center bg-surface-2/90 p-4">
             <div className="flex items-start gap-2 text-sm text-muted">
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-              <p>Sign animation unavailable — showing captions only.</p>
+              <p>Sign service unavailable — showing captions.</p>
             </div>
           </div>
         )}
