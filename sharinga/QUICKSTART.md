@@ -1,31 +1,64 @@
 # Quickstart Guide - Sharinga
 
-## 1. Get SignSpeak API Key (Avatar)
-Follow step-by-step: `SIGNSPEAK_API_KEY_GUIDE.md`
+Sharinga needs **no API keys**. The sign avatar is rendered in the browser with
+CSS 3D transforms and a built-in sign dictionary, so it works offline and free.
 
-Once you have the key, create `client/.env`:
+## 1. Configure the client (optional)
 
 ```env
-VITE_SIGNSPEAK_API_KEY=your_actual_key_here
+# client/.env  (only needed when the API is not proxied)
 VITE_API_URL=http://localhost:5000
 ```
 
-## 2. Start MongoDB
-Make sure MongoDB is running locally (mongod) or use Atlas. Update `server/.env` if using Atlas.
+If you skip this, the client calls the API on the same origin. In `vite dev`
+you need it so requests reach the Express server on port 5000.
 
-## 3. Run Locally
+## 2. Start MongoDB
+
+Make sure MongoDB is running locally (`mongod`) or use MongoDB Atlas.
+Update `server/.env` if you use Atlas (see `server/.env.example`).
+
+## 2b. Server env
+
+```env
+# server/.env
+MONGODB_URI=mongodb://127.0.0.1:27017/sharinga
+JWT_SECRET=any-long-random-string
+CLIENT_ORIGIN=http://localhost:5173
+```
+
+## 3. Run locally
+
 ```bash
-cd C:\Users\Dell\OneDrive\Desktop\sharinga
 npm run dev
 ```
 
 Open http://localhost:5173 in two incognito windows to test.
 
-## 4. Test Accessibility Modes
-- Register User 1 as "Standard", User 2 as "Deaf/Hard of hearing"
-- Create room from User 1, join from User 2
-- Deaf user sees ASL avatar in right panel + captions
-- Standard sees normal text
+## 2. Test accessibility modes
 
-## 5. Deploy to Render
-See `RENDER_DEPLOY.md` - one service recommended. Add `VITE_SIGNSPEAK_API_KEY` to Render build env.
+- Register User 1 as "Standard", User 2 as "Deaf / hard of hearing"
+- Create a room with User 1, join it from User 2
+- The Deaf user sees the **3D sign avatar** in the right panel, signing each
+  incoming message word-by-word, with the text underneath
+- The Standard user sees normal text
+
+## 3. Deploy to Render
+
+See `RENDER_DEPLOY.md` — a single service is recommended (API + built frontend).
+
+## Extending the sign dictionary
+
+Signs live in `client/src/lib/sign3d/poses.js`. Add an entry to `SIGNS`:
+
+```js
+MYWORD: {
+  repeats: 2,              // optional: play the frames twice
+  frames: [
+    { R: S(20, 12, 96, "flat") },   // S(forward, out, elbow, handshape)
+    { R: S(30, 12, 58, "flat") },
+  ],
+},
+```
+
+Words that are not in the dictionary are fingerspelled automatically.

@@ -60,7 +60,7 @@ sharinga/
 │   └── src/
 │       ├── pages/           # Login, Register, Lobby, Settings
 │       ├── components/
-│       │   ├── chat/        # Chat, MessageBubble, Composer, AslAvatar, PictogramView
+│       │   ├── chat/        # Chat, MessageBubble, Composer, Sign3DAvatar, PictogramView
 │       │   ├── layout/      # AppShell (nav + menu)
 │       │   └── ui/          # Button, Field, badges, avatar, logo
 │       ├── context/         # AuthContext, DisplayContext (theme/contrast/text size)

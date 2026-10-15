@@ -13,8 +13,7 @@ import {
 import AppShell from "../layout/AppShell";
 import MessageBubble from "./MessageBubble";
 import Composer from "./Composer";
-import AslAvatar from "./AslAvatar";
-import PoseAvatar from "./PoseAvatar";
+import Sign3DAvatar from "./Sign3DAvatar";
 import PictogramView from "./PictogramView";
 import UserAvatar from "../ui/UserAvatar";
 import ModeBadge from "../ui/ModeBadge";
@@ -325,10 +324,8 @@ export default function Chat() {
             >
               {wantsAvatar && (
                 <div>
-                  <h2 className="sr-only">ASL avatar</h2>
-                  <PoseAvatar
-                    text={lastIncoming?.text || ""}
-                  />
+                  <h2 className="sr-only">Sign language avatar</h2>
+                  <Sign3DAvatar text={lastIncoming?.text || ""} />
                 </div>
               )}
 
@@ -352,7 +349,7 @@ export default function Chat() {
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {wantsAvatar
-                    ? "Every message from your partner is signed by the ASL avatar and shown as large captions underneath."
+                    ? "Every message from your partner is signed by the 3D avatar, word by word, with the text shown underneath."
                     : "Messages are rewritten in simpler words and shown with picture symbols so meaning is easy to catch."}
                 </p>
                 <label className="mt-3 flex cursor-pointer items-center gap-2.5 text-sm font-semibold text-ink">

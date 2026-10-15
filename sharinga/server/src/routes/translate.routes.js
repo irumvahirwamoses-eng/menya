@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
         }
       } catch {}
     }
-    const words = text.split();
+    const words = text.split(/\s+/).filter(Boolean);
     const gloss = words.map((w) => w.replace(/[^A-Za-z0-9]/g, "").toUpperCase()).join(" ");
     return res.json({ text, gloss: gloss || text.toUpperCase(), success: true });
   } catch (e) {
