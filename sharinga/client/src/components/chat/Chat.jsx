@@ -14,6 +14,7 @@ import AppShell from "../layout/AppShell";
 import MessageBubble from "./MessageBubble";
 import Composer from "./Composer";
 import AslAvatar from "./AslAvatar";
+import PoseAvatar from "./PoseAvatar";
 import PictogramView from "./PictogramView";
 import UserAvatar from "../ui/UserAvatar";
 import ModeBadge from "../ui/ModeBadge";
@@ -325,9 +326,8 @@ export default function Chat() {
               {wantsAvatar && (
                 <div>
                   <h2 className="sr-only">ASL avatar</h2>
-                  <AslAvatar
+                  <PoseAvatar
                     text={lastIncoming?.text || ""}
-                    model={partner?.avatarModel || "MALE"}
                   />
                 </div>
               )}
