@@ -1,0 +1,19 @@
+{
+  "name": "MENYA — AI Learning Platform",
+  "short_name": "MENYA",
+  "description": "Personalised AI-powered learning for Rwandan TVET students.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5F7FA",
+  "theme_color": "#142B4A",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

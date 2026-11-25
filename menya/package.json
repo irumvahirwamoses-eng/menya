@@ -1,0 +1,28 @@
+{
+  "name": "menya-workspace",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c green,cyan \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm run dev --workspace @menya/server",
+    "dev:web": "npm run dev --workspace @menya/client",
+    "build": "npm run build --workspace @menya/client && npm run typecheck --workspace @menya/server",
+    "typecheck": "npm run typecheck --workspace @menya/client && npm run typecheck --workspace @menya/server",
+    "typecheck:client": "npm run typecheck --workspace @menya/client",
+    "typecheck:server": "npm run typecheck --workspace @menya/server",
+    "start": "npm run start --workspace @menya/server",
+    "seed": "npm run seed --workspace @menya/server",
+    "lint": "oxlint client/src server",
+    "preview": "npm run preview --workspace @menya/client"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.7",
+    "oxlint": "^1.90.0",
+    "playwright-core": "^1.65.1"
+  }
+}
